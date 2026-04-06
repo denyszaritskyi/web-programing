@@ -1,0 +1,70 @@
+/* Світла та темна тема (Завдання 4) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --container-bg: #f9f9f9;
+}
+
+body.dark-mode {
+  --bg-color: #222222;
+  --text-color: #f0f0f0;
+  --container-bg: #333333;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  padding: 20px;
+}
+
+/* Стилі для модального вікна (Завдання 3) */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--container-bg);
+  padding: 30px;
+  border-radius: 8px;
+  z-index: 1000;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.modal.active,
+.modal-overlay.active {
+  display: block;
+}
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.modal form input,
+.modal form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Стилі для футера (Завдання 1)*/
+footer {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid var(--text-color);
+  font-size: 0.9em;
+}
