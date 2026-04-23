@@ -12,6 +12,7 @@ body {
   margin: 0 auto;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
+  position: relative;
 }
 
 .header {
@@ -45,68 +46,159 @@ table.layout {
   transition: all 0.3s ease;
 }
 
-.theme-btn:hover {
-  background-color: #e0e0e0;
+/* Коментарі */
+.comment-card {
+  margin-bottom: 12px;
+  border-left: 3px solid #000;
+  padding-left: 10px;
 }
 
-.comment-card {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed #ddd;
+.comment-card strong {
+  font-size: 0.9em;
+  display: block;
 }
 
 .comment-card p {
-  margin: 5px 0 0 0;
-  font-size: 0.9em;
+  margin: 3px 0;
+  font-size: 0.85em;
   color: #555;
-  font-style: italic;
 }
 
 .system-info {
-  text-align: center;
-  color: gray;
-  font-size: 0.85em;
-  margin-top: 30px;
+  margin-top: 40px;
+  padding: 15px;
   border-top: 1px dashed gray;
-  padding-top: 10px;
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f7f7f7;
+  padding: 30px 40px;
+  z-index: 101;
+  width: 340px;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+}
+
+.modal.active,
+.overlay.active {
+  display: block;
+}
+
+.modal h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+}
+
+.modal textarea {
+  height: 90px;
+  resize: vertical;
+}
+
+.modal input::placeholder,
+.modal textarea::placeholder {
+  color: #888;
+}
+
+.modal .submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #efefef;
+  border: 1px solid #888;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #000;
+  transition: background 0.2s;
+}
+
+.modal .submit-btn:hover {
+  background-color: #ddd;
 }
 
 body.dark-mode {
   background-color: #121212;
 }
-
 body.dark-mode .cv-format {
   background-color: #1e1e1e;
   color: #e0e0e0;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
-
 body.dark-mode .header {
-  background-color: #000000;
+  background-color: #000;
   border-bottom: 1px solid #333;
 }
-
 body.dark-mode .theme-btn {
   background-color: #333;
   color: #fff;
 }
-
-body.dark-mode .theme-btn:hover {
-  background-color: #555;
-}
-
-body.dark-mode hr {
-  border-color: #555 !important;
-}
-
-body.dark-mode table.layout {
-  border-color: #555 !important;
-}
-
 body.dark-mode .comment-card {
-  border-bottom-color: #444;
+  border-left-color: #fff;
+}
+body.dark-mode .comment-card p {
+  color: #bbb;
+}
+body.dark-mode .system-info {
+  color: #888;
 }
 
-body.dark-mode .comment-card p {
-  color: #aaa;
+body.dark-mode .modal {
+  background: #222;
+}
+body.dark-mode .modal h2 {
+  color: #eee;
+}
+body.dark-mode .modal input,
+body.dark-mode .modal textarea {
+  background: #333;
+  color: #fff;
+  border-color: #555;
+}
+body.dark-mode .modal input::placeholder,
+body.dark-mode .modal textarea::placeholder {
+  color: #bbb;
+}
+body.dark-mode .modal .submit-btn {
+  background: #444;
+  color: #fff;
+  border-color: #666;
+}
+body.dark-mode .modal .submit-btn:hover {
+  background: #555;
 }

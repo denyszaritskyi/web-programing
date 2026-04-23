@@ -7,9 +7,21 @@
   </head>
 
   <body>
+    <div id="overlay" class="overlay"></div>
+    <div id="modal" class="modal">
+      <h2>Зворотний зв'язок</h2>
+      <form action="https://formspree.io/f/your-id" method="POST">
+        <input type="text" name="name" placeholder="Ім'я" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="tel" name="phone" placeholder="Номер телефону" required />
+        <textarea name="message" placeholder="Ваш текст" required></textarea>
+        <button type="submit" class="submit-btn">Відправити</button>
+      </form>
+    </div>
+
     <div class="cv-format">
       <div class="header">
-        <h1><i>Denys Zaritskyi</i></h1>
+        <h1>Denys Zaritskyi</h1>
         <button id="theme-toggle" class="theme-btn">Темна тема</button>
       </div>
 
@@ -50,9 +62,7 @@
                 Major: Cybersecurity<br />
                 Expected Graduation: 2028
               </p>
-
               <br /><br />
-
               <h2>Awards & acknowledgments</h2>
               <hr style="border: 1px dashed black" />
               <ul style="padding-left: 20px">
@@ -104,7 +114,7 @@
               <br />
               <h2>Reviews</h2>
               <hr style="border: 1px dashed black" />
-              <div id="comments-container">Loading...</div>
+              <div id="comments-container">Завантаження відгуків...</div>
             </td>
           </tr>
         </table>
@@ -124,64 +134,42 @@
 
       themeToggleBtn.addEventListener("click", () => {
         body.classList.toggle("dark-mode");
-
-        if (body.classList.contains("dark-mode")) {
-          localStorage.setItem("theme", "dark");
-          themeToggleBtn.textContent = "Світла тема";
-        } else {
-          localStorage.setItem("theme", "light");
-          themeToggleBtn.textContent = "Темна тема";
-        }
+        const isDark = body.classList.contains("dark-mode");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        themeToggleBtn.textContent = isDark ? "Світла тема" : "Темна тема";
       });
 
-      function getSystemInfo() {
-        const ua = navigator.userAgent;
-        let browser = "Невідомий браузер";
-        let os = "Невідома ОС";
-
-        if (ua.includes("Firefox")) browser = "Firefox";
-        else if (ua.includes("Chrome")) browser = "Chrome";
-        else if (ua.includes("Safari")) browser = "Safari";
-        else if (ua.includes("Edge")) browser = "Edge";
-
-        if (ua.includes("Win")) os = "Windows";
-        else if (ua.includes("Mac")) os = "MacOS";
-        else if (ua.includes("Linux")) os = "Linux";
-
-        return `${os}, ${browser}`;
-      }
-
-      localStorage.setItem("os_browser_info", getSystemInfo());
-      const savedSysInfo = localStorage.getItem("os_browser_info");
-
-      document.getElementById("system-info").innerHTML =
-        `System: ${savedSysInfo}`;
+      const sysInfoString = navigator.userAgent;
+      document.getElementById("system-info").textContent = sysInfoString;
 
       const commentsContainer = document.getElementById("comments-container");
-
       fetch("https://jsonplaceholder.typicode.com/comments?_limit=3")
         .then((response) => response.json())
         .then((data) => {
           commentsContainer.innerHTML = "";
-
           data.forEach((comment) => {
             const card = document.createElement("div");
             card.className = "comment-card";
-
-            const name = document.createElement("strong");
-            name.textContent = comment.name.substring(0, 20) + "...";
-
-            const bodyTxt = document.createElement("p");
-            bodyTxt.textContent = comment.body.substring(0, 60) + "...";
-
-            card.appendChild(name);
-            card.appendChild(bodyTxt);
+            card.innerHTML = `<strong>${comment.name.slice(0, 25)}...</strong><p>${comment.body.slice(0, 70)}...</p>`;
             commentsContainer.appendChild(card);
           });
         })
         .catch(() => {
-          commentsContainer.textContent = "Error loading reviews.";
+          commentsContainer.textContent = "Не вдалося завантажити відгуки.";
         });
+
+      const modal = document.getElementById("modal");
+      const overlay = document.getElementById("overlay");
+
+      setTimeout(() => {
+        modal.classList.add("active");
+        overlay.classList.add("active");
+      }, 60000);
+
+      overlay.addEventListener("click", () => {
+        modal.classList.remove("active");
+        overlay.classList.remove("active");
+      });
     </script>
   </body>
 </html>
