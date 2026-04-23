@@ -10,7 +10,7 @@
     <div class="cv-format">
       <div class="header">
         <h1><i>Denys Zaritskyi</i></h1>
-        <button id="theme-toggle" class="theme-btn">🌙 Темна тема</button>
+        <button id="theme-toggle" class="theme-btn">Темна тема</button>
       </div>
 
       <div class="content">
@@ -100,9 +100,16 @@
                   control using Git.
                 </li>
               </ul>
+
+              <br />
+              <h2>Reviews</h2>
+              <hr style="border: 1px dashed black" />
+              <div id="comments-container">Loading...</div>
             </td>
           </tr>
         </table>
+
+        <div id="system-info" class="system-info"></div>
       </div>
     </div>
 
@@ -112,7 +119,7 @@
 
       if (localStorage.getItem("theme") === "dark") {
         body.classList.add("dark-mode");
-        themeToggleBtn.textContent = "☀️ Світла тема";
+        themeToggleBtn.textContent = "Світла тема";
       }
 
       themeToggleBtn.addEventListener("click", () => {
@@ -120,12 +127,61 @@
 
         if (body.classList.contains("dark-mode")) {
           localStorage.setItem("theme", "dark");
-          themeToggleBtn.textContent = "☀️ Світла тема";
+          themeToggleBtn.textContent = "Світла тема";
         } else {
           localStorage.setItem("theme", "light");
-          themeToggleBtn.textContent = "🌙 Темна тема";
+          themeToggleBtn.textContent = "Темна тема";
         }
       });
+
+      function getSystemInfo() {
+        const ua = navigator.userAgent;
+        let browser = "Невідомий браузер";
+        let os = "Невідома ОС";
+
+        if (ua.includes("Firefox")) browser = "Firefox";
+        else if (ua.includes("Chrome")) browser = "Chrome";
+        else if (ua.includes("Safari")) browser = "Safari";
+        else if (ua.includes("Edge")) browser = "Edge";
+
+        if (ua.includes("Win")) os = "Windows";
+        else if (ua.includes("Mac")) os = "MacOS";
+        else if (ua.includes("Linux")) os = "Linux";
+
+        return `${os}, ${browser}`;
+      }
+
+      localStorage.setItem("os_browser_info", getSystemInfo());
+      const savedSysInfo = localStorage.getItem("os_browser_info");
+
+      document.getElementById("system-info").innerHTML =
+        `System: ${savedSysInfo}`;
+
+      const commentsContainer = document.getElementById("comments-container");
+
+      fetch("https://jsonplaceholder.typicode.com/comments?_limit=3")
+        .then((response) => response.json())
+        .then((data) => {
+          commentsContainer.innerHTML = "";
+
+          data.forEach((comment) => {
+            const card = document.createElement("div");
+            card.className = "comment-card";
+
+            const name = document.createElement("strong");
+            name.textContent = comment.name.substring(0, 20) + "...";
+
+            const bodyTxt = document.createElement("p");
+            bodyTxt.textContent = comment.body.substring(0, 60) + "...";
+
+            card.appendChild(name);
+            card.appendChild(bodyTxt);
+            commentsContainer.appendChild(card);
+          });
+        })
+        .catch(() => {
+          commentsContainer.textContent = "Error loading reviews.";
+        });
     </script>
   </body>
 </html>

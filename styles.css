@@ -33,7 +33,6 @@ table.layout {
   border-collapse: collapse;
 }
 
-/* --- СТИЛІ КНОПКИ --- */
 .theme-btn {
   padding: 10px 15px;
   font-size: 1em;
@@ -48,6 +47,28 @@ table.layout {
 
 .theme-btn:hover {
   background-color: #e0e0e0;
+}
+
+.comment-card {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.comment-card p {
+  margin: 5px 0 0 0;
+  font-size: 0.9em;
+  color: #555;
+  font-style: italic;
+}
+
+.system-info {
+  text-align: center;
+  color: gray;
+  font-size: 0.85em;
+  margin-top: 30px;
+  border-top: 1px dashed gray;
+  padding-top: 10px;
 }
 
 body.dark-mode {
@@ -80,4 +101,12 @@ body.dark-mode hr {
 
 body.dark-mode table.layout {
   border-color: #555 !important;
+}
+
+body.dark-mode .comment-card {
+  border-bottom-color: #444;
+}
+
+body.dark-mode .comment-card p {
+  color: #aaa;
 }
